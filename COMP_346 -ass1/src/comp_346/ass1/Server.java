@@ -326,6 +326,7 @@ public class Server extends Thread{
             }
             else
             {
+                objNetwork.transferIn(trans);
                 processTransactions(trans);
                 currentAccountIndex++;
             }
