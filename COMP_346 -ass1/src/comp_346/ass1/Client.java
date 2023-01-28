@@ -212,28 +212,38 @@ public class Client extends Thread{
     {   
     	Transactions transact = new Transactions();
     	long sendClientStartTime, sendClientEndTime, receiveClientStartTime, receiveClientEndTime;
-        if(clientOperation.equals("sending"))
-        {
-            if(objNetwork.getInBufferStatus().equals("full"))
+    	int count = 0;
+    		transact = transaction[count];
+            if(clientOperation.equals("sending"))
             {
-                Thread.yield();
+            	while(true) {
+	                if(objNetwork.getInBufferStatus().equals("full"))
+	                {
+	                    Thread.yield();
+	                }
+	                else
+	                {
+	                    sendTransactions();
+	                    count++;
+	                }
+            	}
             }
-            else
+            else if (clientOperation.equals("receiving"))
             {
-                sendTransactions();
+            	while(true) {
+	                if(objNetwork.getOutBufferStatus().equals("empty"))
+	                {
+	                    Thread.yield();
+	                }
+	                else
+	                {
+	                    receiveTransactions(transact);
+	                    count++;
+	                }
+            	}
             }
-        }
-        else if (clientOperation.equals("receiving"))
-        {
-            if(objNetwork.getOutBufferStatus().equals("empty"))
-            {
-                Thread.yield();
-            }
-            else
-            {
-                receiveTransactions(transact);
-            }
-        }
+    	
+    	
 
         
     
