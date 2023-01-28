@@ -308,23 +308,31 @@ public class Server extends Thread{
      * @param
      */
     public void run()
-    {   Transactions trans = new Transactions();
+    {   
+        Transactions trans = new Transactions();
     	long serverStartTime=0, serverEndTime=0;
-
+        
     	System.out.println("\n DEBUG : Server.run() - starting server thread " + objNetwork.getServerConnectionStatus());
-    	
+
     	/* Implement the code for the run method */
         
-        System.out.println("\n Terminating server thread - " + " Running time " + (serverEndTime - serverStartTime) + " milliseconds");
+        int currentAccountIndex = 0;
         
-        if(objNetwork.getInBufferStatus().equals("full") || objNetwork.getOutBufferStatus().equals("empty"))
-        {
-            Thread.yield();
+        while(currentAccountIndex<account.length)
+        {   
+            if(objNetwork.getInBufferStatus().equals("full") || objNetwork.getOutBufferStatus().equals("empty"))
+            {
+                Thread.yield();
+            }
+            else
+            {
+                processTransactions(trans);
+                currentAccountIndex++;
+            }
         }
-        else
-        {
-            processTransactions(trans);
-        }
+        serverEndTime = System.currentTimeMillis();
+        System.out.println("\n Terminating server thread - " + " Running time " + (serverEndTime - serverStartTime) + " milliseconds");
+
     }   
 }
 
