@@ -15,7 +15,8 @@ public class Accounts {
     private String accountType;         /* chequing, saving, credit */
     private String firstName;           /* First name of account holder */
     private String lastName;            /* Last name of account holder */
-    private double balance;             /* Account balance */
+    private double balance;
+    /* Account balance */
      
    /** 
     * Constructor method of Accounts class
