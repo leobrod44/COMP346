@@ -227,6 +227,8 @@ public class Client extends Thread{
 	                    sendTransactions();
 	                    count++;
 	                }
+	                if(count == transaction.length)
+	                	break;
             	}
             	sendClientEndTime = System.currentTimeMillis();
             	System.out.println("Client send thread run time: " + (sendClientEndTime - sendClientStartTime) + "ms");
@@ -244,6 +246,8 @@ public class Client extends Thread{
 	                    receiveTransactions(transact);
 	                    count++;
 	                }
+	                if(count == transaction.length)
+	                	break;
             	}
             	receiveClientEndTime = System.currentTimeMillis();
             	System.out.println("Client send thread run time: " + (receiveClientEndTime - receiveClientStartTime) + "ms");
