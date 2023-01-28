@@ -321,21 +321,35 @@ public class Server extends Thread{
     	/* Implement the code for the run method */
         
         int currentAccountIndex = 0;
+        boolean activated = false;
         
-        while(currentAccountIndex<account.length)
+        while(true)
         {   
+            if(objNetwork.getClientConnectionStatus().equals("connected"))
+            {
+                activated = true;
+            }
+            if(!objNetwork.getClientConnectionStatus().equals("connected") && activated && objNetwork.getInBufferStatus().equals("empty"))
+            {
+                System.out.println("beans0");
+                break;
+            }
             if(objNetwork.getInBufferStatus().equals("empty"))
             {
                 Thread.yield();
+                System.out.println("beans1");
             }
             else
             {
                 processTransactions(trans);
                 System.out.println(trans);
                 currentAccountIndex++;
+                System.out.println("beans2");
             }
+           
         }
         serverEndTime = System.currentTimeMillis();
+        objNetwork.setServerConnectionStatus("disconnected");
         System.out.println("\n Terminating server thread - " + " Running time " + (serverEndTime - serverStartTime) + " milliseconds");
 
     }   
