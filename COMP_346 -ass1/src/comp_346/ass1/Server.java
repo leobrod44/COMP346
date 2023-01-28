@@ -327,6 +327,7 @@ public class Server extends Thread{
             else
             {
                 processTransactions(trans);
+                System.out.println(trans);
                 currentAccountIndex++;
             }
         }

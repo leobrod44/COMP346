@@ -213,39 +213,41 @@ public class Client extends Thread{
     	Transactions transact = new Transactions();
     	long sendClientStartTime, sendClientEndTime, receiveClientStartTime, receiveClientEndTime;
     	int count = 0;
-    		transact = transaction[count];
-            if(clientOperation.equals("sending"))
-            {
-            	while(true) {
-	                if(objNetwork.getInBufferStatus().equals("full"))
-	                {
-	                    Thread.yield();
-	                }
-	                else
-	                {
-	                    sendTransactions();
-	                    count++;
-	                }
-            	}
-            }
-            else if (clientOperation.equals("receiving"))
-            {
-            	while(true) {
-	                if(objNetwork.getOutBufferStatus().equals("empty"))
-	                {
-	                    Thread.yield();
-	                }
-	                else
-	                {
-	                    receiveTransactions(transact);
-	                    count++;
-	                }
-            	}
-            }
-    	
-    	
-
         
+        
+        
+        transact = transaction[count];
+        if(clientOperation.equals("sending"))
+        {
+            System.out.println("\nDEBUG : Client.run() - starting client sending thread connected");
+            while(true) {
+                if(objNetwork.getInBufferStatus().equals("full"))
+                {
+                    Thread.yield();
+                }
+                else
+                {
+                    sendTransactions();
+                    count++;
+                }
+            }
+        }
+        else if (clientOperation.equals("receiving"))
+        {
+            System.out.println("\nDEBUG : Client.run() - starting client receiving thread connected");
+            while(true) {
+                if(objNetwork.getOutBufferStatus().equals("empty"))
+                {
+                    Thread.yield();
+                }
+                else
+                {
+                    receiveTransactions(transact);
+                    count++;
+                }
+            }
+        }
+    
     
     	/* Implement here the code for the run method ... */
         
