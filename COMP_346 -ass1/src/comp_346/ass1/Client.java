@@ -216,6 +216,7 @@ public class Client extends Thread{
     		transact = transaction[count];
             if(clientOperation.equals("sending"))
             {
+            	sendClientStartTime = System.currentTimeMillis();
             	while(true) {
 	                if(objNetwork.getInBufferStatus().equals("full"))
 	                {
@@ -227,9 +228,12 @@ public class Client extends Thread{
 	                    count++;
 	                }
             	}
+            	sendClientEndTime = System.currentTimeMillis();
+            	System.out.println("Client send thread run time: " + (sendClientEndTime - sendClientStartTime) + "ms");
             }
             else if (clientOperation.equals("receiving"))
             {
+            	receiveClientStartTime = System.currentTimeMillis();
             	while(true) {
 	                if(objNetwork.getOutBufferStatus().equals("empty"))
 	                {
@@ -241,6 +245,8 @@ public class Client extends Thread{
 	                    count++;
 	                }
             	}
+            	receiveClientEndTime = System.currentTimeMillis();
+            	System.out.println("Client send thread run time: " + (receiveClientEndTime - receiveClientStartTime) + "ms");
             }
     	
     	
