@@ -213,40 +213,42 @@ public class Client extends Thread{
     	Transactions transact = new Transactions();
     	long sendClientStartTime, sendClientEndTime, receiveClientStartTime, receiveClientEndTime;
     	int count = 0;
-        
-        
-        
-        transact = transaction[count];
-        if(clientOperation.equals("sending"))
-        {
-            System.out.println("\nDEBUG : Client.run() - starting client sending thread connected");
-            while(true) {
-                if(objNetwork.getInBufferStatus().equals("full"))
-                {
-                    Thread.yield();
-                }
-                else
-                {
-                    sendTransactions();
-                    count++;
-                }
+    		transact = transaction[count];
+            if(clientOperation.equals("sending"))
+            {
+            	sendClientStartTime = System.currentTimeMillis();
+            	while(true) {
+	                if(objNetwork.getInBufferStatus().equals("full"))
+	                {
+	                    Thread.yield();
+	                }
+	                else
+	                {
+	                    sendTransactions();
+	                    count++;
+	                }
+            	}
+            	sendClientEndTime = System.currentTimeMillis();
+            	System.out.println("Client send thread run time: " + (sendClientEndTime - sendClientStartTime) + "ms");
             }
-        }
-        else if (clientOperation.equals("receiving"))
-        {
-            System.out.println("\nDEBUG : Client.run() - starting client receiving thread connected");
-            while(true) {
-                if(objNetwork.getOutBufferStatus().equals("empty"))
-                {
-                    Thread.yield();
-                }
-                else
-                {
-                    receiveTransactions(transact);
-                    count++;
-                }
+            else if (clientOperation.equals("receiving"))
+            {
+            	receiveClientStartTime = System.currentTimeMillis();
+            	while(true) {
+	                if(objNetwork.getOutBufferStatus().equals("empty"))
+	                {
+	                    Thread.yield();
+	                }
+	                else
+	                {
+	                    receiveTransactions(transact);
+	                    count++;
+	                }
+            	}
+            	receiveClientEndTime = System.currentTimeMillis();
+            	System.out.println("Client send thread run time: " + (receiveClientEndTime - receiveClientStartTime) + "ms");
             }
-        }
+    
     
     
     	/* Implement here the code for the run method ... */
