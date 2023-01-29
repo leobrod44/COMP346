@@ -154,13 +154,16 @@ public class Client extends Thread{
      public void sendTransactions()
      {
          int i = 0;     /* index of transaction array */
-         
+         //System.out.println("1 "+objNetwork.getInBufferStatus());
          while (i < getNumberOfTransactions())
          {  
-            // while( objNetwork.getInBufferStatus().equals("full") );     /* Alternatively, busy-wait until the network input buffer is available */
-                                             	
+            /**while(objNetwork.getInBufferStatus().equals("empty"))
+            {
+                Thread.yield();
+                System.out.println("2 "+objNetwork.getInBufferStatus());
+            } **/   /* Alternatively, busy-wait until the network input buffer is available */                            	
             transaction[i].setTransactionStatus("sent");   /* Set current transaction status */
-           
+            //System.out.println("3 "+objNetwork.getInBufferStatus());
             //System.out.println("\n DEBUG : Client.sendTransactions() - sending transaction on account " + transaction[i].getAccountNumber());
             
             objNetwork.send(transaction[i]);                            /* Transmit current transaction */
@@ -181,7 +184,10 @@ public class Client extends Thread{
          
          while (i < getNumberOfTransactions())
          {     
-        	 // while( objNetwork.getOutBufferStatus().equals("empty"));  	/* Alternatively, busy-wait until the network output buffer is available */
+             /**while(objNetwork.getOutBufferStatus().equals("empty"))
+            {
+                Thread.yield();
+            }   **/             /* Alternatively, busy-wait until the network output buffer is available */
                                                                         	
             objNetwork.receive(transact);                               	/* Receive updated transaction from the network buffer */
             
@@ -226,6 +232,7 @@ public class Client extends Thread{
                     else
                     {
                         sendTransactions();
+                        System.out.println("send " +transact);
                         count++;
                     }
                    // System.out.println(count);
@@ -245,6 +252,7 @@ public class Client extends Thread{
                     else
                     {
                         receiveTransactions(transact);
+                        System.out.println("receive " +transact);
                         count++;
                     }
                     //System.out.println(-count);

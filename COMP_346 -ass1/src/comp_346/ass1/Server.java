@@ -327,6 +327,7 @@ public class Server extends Thread{
         {   
             if(objNetwork.getClientConnectionStatus().equals("connected"))
             {
+                System.out.println("beans3");
                 activated = true;
             }
             if(!objNetwork.getClientConnectionStatus().equals("connected") && activated && objNetwork.getInBufferStatus().equals("empty"))
@@ -336,8 +337,8 @@ public class Server extends Thread{
             }
             if(objNetwork.getInBufferStatus().equals("empty"))
             {
-                Thread.yield();
                 System.out.println("beans1");
+                Thread.yield();
             }
             else
             {
@@ -346,6 +347,8 @@ public class Server extends Thread{
                 currentAccountIndex++;
                 System.out.println("beans2");
             }
+            
+            System.out.println("allooooo11111111111111111111111");
            
         }
         serverEndTime = System.currentTimeMillis();
