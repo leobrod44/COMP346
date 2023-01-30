@@ -193,7 +193,11 @@ public class Server extends Thread{
          /* Process the accounts until the client disconnects */
          while ((!objNetwork.getClientConnectionStatus().equals("disconnected")))
          { 
-        	 /* while( (objNetwork.getInBufferStatus().equals("empty"))); */  /* Alternatively, busy-wait until the network input buffer is available */
+        	  while((objNetwork.getInBufferStatus().equals("empty")) && (!objNetwork.getClientConnectionStatus().equals("disconnected")))
+                  {
+                      Thread.yield();
+                      
+                  }/* Alternatively, busy-wait until the network input buffer is available */
         	 
         	 if (!objNetwork.getInBufferStatus().equals("empty"))
         	 {
@@ -319,33 +323,9 @@ public class Server extends Thread{
     	//System.out.println("\n DEBUG : Server.run() - starting server thread " + objNetwork.getServerConnectionStatus());
 
     	/* Implement the code for the run method */
-        
-        int currentAccountIndex = 0;
-        boolean activated = false;
-        
-        while(true)
-        {   
-            if(objNetwork.getClientConnectionStatus().equals("connected"))
-            {
-                activated = true;
-            }
-            if(!objNetwork.getClientConnectionStatus().equals("connected") && activated && objNetwork.getInBufferStatus().equals("empty"))
-            {
-                break;
-            }
-            if(objNetwork.getInBufferStatus().equals("empty"))
-            {
-                Thread.yield();
-            }
-            else
-            {
-                processTransactions(trans);
-                System.out.println(trans);
-                currentAccountIndex++;
-            }
-           
-        }
+        processTransactions(trans);
         serverEndTime = System.currentTimeMillis();
+        objNetwork.disconnect(objNetwork.getServerIP());
         objNetwork.setServerConnectionStatus("disconnected");
         System.out.println("\n Terminating server thread - " + " Running time " + (serverEndTime - serverStartTime) + " milliseconds");
 

@@ -180,13 +180,15 @@ public class Client extends Thread{
      public void receiveTransactions(Transactions transact)
      {
          int i = 0;     /* Index of transaction array */
-         
+         boolean active = false;
          while (i < getNumberOfTransactions())
          {     
-        	 while( objNetwork.getOutBufferStatus().equals("empty")) {		/* Alternatively, busy-wait until the network output buffer is available */
-        		 Thread.yield();
-        	 }
-                                                                        	
+
+            while(objNetwork.getOutBufferStatus().equals("empty") && !objNetwork.getServerConnectionStatus().equals("disconnected")) 
+            {		
+                Thread.yield();
+            }
+
             objNetwork.receive(transact);                               	/* Receive updated transaction from the network buffer */
             
             //System.out.println("\n DEBUG : Client.receiveTransactions() - receiving updated transaction on account " + transact.getAccountNumber());
@@ -223,7 +225,7 @@ public class Client extends Thread{
             sendTransactions();
             sendClientEndTime = System.currentTimeMillis();
             
-            //System.out.println("\nTerminating server thread - Running time " + (sendClientEndTime - sendClientStartTime) + "milliseconds");
+            System.out.println("\nTerminating client sending thread - Running time " + (sendClientEndTime - sendClientStartTime) + "milliseconds");
 
         }
         else if (clientOperation.equals("receiving"))
@@ -231,9 +233,10 @@ public class Client extends Thread{
             receiveClientStartTime = System.currentTimeMillis();
             receiveTransactions(transact);
             receiveClientEndTime = System.currentTimeMillis();
-            //System.out.println("\nTerminating network thread - Running time " + (receiveClientEndTime - receiveClientStartTime) + "milliseconds");
+            System.out.println("\nTerminating client receiving thread - Running time " + (receiveClientEndTime - receiveClientStartTime) + "milliseconds");
         }
+        
+        objNetwork.setClientConnectionStatus("disconnected");
         objNetwork.disconnect(objNetwork.getClientIP());
-        System.out.println(objNetwork.getClientConnectionStatus());
     }
 }
