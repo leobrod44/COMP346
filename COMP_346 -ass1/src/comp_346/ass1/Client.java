@@ -216,7 +216,6 @@ public class Client extends Thread{
     {   
     	Transactions transact = new Transactions();
     	long sendClientStartTime, sendClientEndTime, receiveClientStartTime, receiveClientEndTime;
-    	transact = transaction[count];
         
         if(clientOperation.equals("sending"))
         {
@@ -224,7 +223,7 @@ public class Client extends Thread{
             sendTransactions();
             sendClientEndTime = System.currentTimeMillis();
             
-            System.out.println("Client send thread run time: " + (sendClientEndTime - sendClientStartTime) + "ms");
+            //System.out.println("\nTerminating server thread - Running time " + (sendClientEndTime - sendClientStartTime) + "milliseconds");
 
         }
         else if (clientOperation.equals("receiving"))
@@ -232,16 +231,9 @@ public class Client extends Thread{
             receiveClientStartTime = System.currentTimeMillis();
             receiveTransactions(transact);
             receiveClientEndTime = System.currentTimeMillis();
-            System.out.println("Client send thread run time: " + (receiveClientEndTime - receiveClientStartTime) + "ms");
+            //System.out.println("\nTerminating network thread - Running time " + (receiveClientEndTime - receiveClientStartTime) + "milliseconds");
         }
-        objNetwork.disconnect(clientOperation);
-    
-    
-    
-    	/* Implement here the code for the run method ... */
-        
-        //2 threads()
-        //connect( to network)
-        //while transactions not empty read them
+        objNetwork.disconnect(objNetwork.getClientIP());
+        System.out.println(objNetwork.getClientConnectionStatus());
     }
 }

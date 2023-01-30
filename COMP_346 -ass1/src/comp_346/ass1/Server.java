@@ -219,7 +219,7 @@ public class Server extends Thread{
         				 trans.setTransactionBalance(newBalance);
         				 trans.setTransactionStatus("done");
         				 
-        				 System.out.println("\n DEBUG : Server.processTransactions() - Withdrawal of " + trans.getTransactionAmount() + " from account " + trans.getAccountNumber());
+        				 //System.out.println("\n DEBUG : Server.processTransactions() - Withdrawal of " + trans.getTransactionAmount() + " from account " + trans.getAccountNumber());
         			 }
         			 else
         				 /* Process query operation */
@@ -331,20 +331,17 @@ public class Server extends Thread{
             }
             if(!objNetwork.getClientConnectionStatus().equals("connected") && activated && objNetwork.getInBufferStatus().equals("empty"))
             {
-                System.out.println("beans0");
                 break;
             }
             if(objNetwork.getInBufferStatus().equals("empty"))
             {
                 Thread.yield();
-                System.out.println("beans1");
             }
             else
             {
                 processTransactions(trans);
                 System.out.println(trans);
                 currentAccountIndex++;
-                System.out.println("beans2");
             }
            
         }

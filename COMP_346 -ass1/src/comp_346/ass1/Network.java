@@ -556,20 +556,14 @@ public class Network extends Thread{
     	
     	while (true)
     	{
-		/* Implement here the code for the run method ... */
-                //thread ends when both client and server threads have disconnected
-                //must continuously yield cpu if one still connected
-                
-                //receive and return trnasactions from client, capacity 10 network indicates if full or empty
-            
-                if(getClientConnectionStatus().equals("active") && getServerConnectionStatus().equals("active"))
-                {
-                    Thread.yield();
-                }
-                else
+                if(getClientConnectionStatus().equals("disconnected") && getServerConnectionStatus().equals("disconnected"))
                 {
                     System.out.println("Terminating network thread - Client disconnected Server disconnected");
                     break;
+                }
+                if(getClientConnectionStatus().equals("connected") || getServerConnectionStatus().equals("connected"))
+                {
+                    Thread.yield();
                 }
     	}    
     }
