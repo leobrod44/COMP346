@@ -183,9 +183,9 @@ public class Client extends Thread{
          boolean active = false;
          while (i < getNumberOfTransactions())
          {     
-
             while(objNetwork.getOutBufferStatus().equals("empty") && !objNetwork.getServerConnectionStatus().equals("disconnected")) 
-            {		
+            {	
+                System.out.println("Client.receiveTransactions() empty");
                 Thread.yield();
             }
 
@@ -225,7 +225,7 @@ public class Client extends Thread{
             sendTransactions();
             sendClientEndTime = System.currentTimeMillis();
             
-            System.out.println("\nTerminating client sending thread - Running time " + (sendClientEndTime - sendClientStartTime) + "milliseconds");
+            System.out.println("\nTerminating client sending thread - Running time " + (sendClientEndTime - sendClientStartTime) + " milliseconds");
 
         }
         else if (clientOperation.equals("receiving"))
@@ -233,7 +233,7 @@ public class Client extends Thread{
             receiveClientStartTime = System.currentTimeMillis();
             receiveTransactions(transact);
             receiveClientEndTime = System.currentTimeMillis();
-            System.out.println("\nTerminating client receiving thread - Running time " + (receiveClientEndTime - receiveClientStartTime) + "milliseconds");
+            System.out.println("\nTerminating client receiving thread - Running time " + (receiveClientEndTime - receiveClientStartTime) + " milliseconds");
             objNetwork.setClientConnectionStatus("disconnected");
             objNetwork.disconnect(objNetwork.getClientIP());
         }

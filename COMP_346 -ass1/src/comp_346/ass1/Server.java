@@ -321,13 +321,14 @@ public class Server extends Thread{
     	long serverStartTime=0, serverEndTime=0;
         
     	//System.out.println("\n DEBUG : Server.run() - starting server thread " + objNetwork.getServerConnectionStatus());
-
-    	/* Implement the code for the run method */
+        
+        serverStartTime = System.currentTimeMillis();
         processTransactions(trans);
         serverEndTime = System.currentTimeMillis();
+        System.out.println("\nTerminating server thread - " + " Running time " + (serverEndTime - serverStartTime) + " milliseconds");
         objNetwork.disconnect(objNetwork.getServerIP());
         objNetwork.setServerConnectionStatus("disconnected");
-        System.out.println("\nTerminating server thread - " + " Running time " + (serverEndTime - serverStartTime) + " milliseconds");
+        
 
     }   
 }
