@@ -424,7 +424,7 @@ public class Server extends Thread {
         serverStartTime = System.currentTimeMillis();
         processTransactions(trans);
         serverEndTime = System.currentTimeMillis();
-        System.out.println("\nTerminating server thread - " + " Running time " + (serverEndTime - serverStartTime) + " milliseconds");
+        System.out.println("\nTerminating server thread " + serverThreadId + " - " + " Running time " + (serverEndTime - serverStartTime) + " milliseconds");
         Network.disconnect(Network.getServerIP());
         Network.setServerConnectionStatus("disconnected");
 	
