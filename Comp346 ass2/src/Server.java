@@ -325,7 +325,13 @@ public class Server extends Thread {
         		
         		 /* System.out.println("\n DEBUG : Server.processTransactions() - transferring out account " + trans.getAccountNumber()); */
 
-                 Network.transferOut(trans);                              /* Transfer a transaction from the network input buffer */
+                 try{
+                     Network.transferOut(trans);
+                 }
+                 catch (InterruptedException e){
+
+                 }
+                                  /* Transfer a transaction from the network input buffer */
                            		/* Transfer a completed transaction from the server to the network output buffer */
         		 setNumberOfTransactions( (getNumberOfTransactions() +  1) ); 	/* Count the number of transactions processed */
         	 }
