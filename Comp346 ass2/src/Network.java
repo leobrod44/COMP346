@@ -35,7 +35,7 @@ public class Network extends Thread {
      Network( )
       { 
     	 int i;  
-         lock = new Semaphore(4);
+         lock = new Semaphore(10);
          lock.release();
          System.out.println("\n Activating the network ...");
          clientIP = "192.168.2.0";

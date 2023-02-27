@@ -206,7 +206,7 @@ public class Server extends Thread {
         
         try
         {
-         inputStream = new Scanner(new FileInputStream("./accounts.txt"));
+         inputStream = new Scanner(new FileInputStream("account.txt"));
         }
         catch(FileNotFoundException e)
         {
