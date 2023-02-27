@@ -1,0 +1,4 @@
+Phase 1 results:
+
+Server times: 699 ms
+Client times: 583 and 695 ms
