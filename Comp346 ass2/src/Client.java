@@ -235,8 +235,8 @@ public class Client extends Thread {
             receiveTransactions(transact);
             receiveClientEndTime = System.currentTimeMillis();
             System.out.println("\nTerminating client receiving thread - Running time " + (receiveClientEndTime - receiveClientStartTime) + " milliseconds");
-            objNetwork.setClientConnectionStatus("disconnected");
-            objNetwork.disconnect(objNetwork.getClientIP());
+            Network.setClientConnectionStatus("disconnected");
+            Network.disconnect(Network.getClientIP());
         }
     }
                 
