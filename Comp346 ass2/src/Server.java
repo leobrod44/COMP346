@@ -416,9 +416,9 @@ public class Server extends Thread {
       
     public void run()
     {
+        long serverStartTime=0, serverEndTime=0;
         Transactions trans = new Transactions();
-    	 long serverStartTime=0, serverEndTime=0;
-    
+        Transactions trans2 = new Transactions();
 	/* System.out.println("\n DEBUG : Server.run() - starting server thread " + getServerThreadId() + " " + Network.getServerConnectionStatus()); */
     	
     	/* .....................................................................................................................................................................................................*/
