@@ -24,7 +24,8 @@ public class Network extends Thread {
     private static String inBufferStatus, outBufferStatus;     /* Current status of the network buffers - normal, full, empty */
     private static String networkStatus;                       /* Network status - active, inactive */
 
-    private static Semaphore lock;
+    private static Semaphore lockNotDone;
+    private static Semaphore lockDone;
        
     /** 
      * Constructor of the Network class
@@ -35,8 +36,8 @@ public class Network extends Thread {
      Network( )
       { 
     	 int i;  
-         lock = new Semaphore(10);
-         lock.release();
+         lockDone = new Semaphore(0);
+         lockNotDone = new Semaphore(0);
          System.out.println("\n Activating the network ...");
          clientIP = "192.168.2.0";
          serverIP = "216.120.40.10";
@@ -377,7 +378,7 @@ public class Network extends Thread {
               {
                   setInBufferStatus("normal");
               }
-              lock.release();
+              lockNotDone.release();
             return true;
         }   
          
@@ -388,7 +389,7 @@ public class Network extends Thread {
      */
          public static boolean receive(Transactions outPacket) throws InterruptedException
          {
-            lock.acquire();
+            lockDone.acquire();
         		 outPacket.setAccountNumber(outGoingPacket[outputIndexClient].getAccountNumber());
         		 outPacket.setOperationType(outGoingPacket[outputIndexClient].getOperationType());
         		 outPacket.setTransactionAmount(outGoingPacket[outputIndexClient].getTransactionAmount());
@@ -447,7 +448,7 @@ public class Network extends Thread {
         		{
         			setOutBufferStatus("normal");
         		}
-                lock.release();
+                lockDone.release();
              return true;
         }   
          
@@ -459,6 +460,7 @@ public class Network extends Thread {
      */
        public static boolean transferIn(Transactions inPacket) throws InterruptedException
        {
+           lockNotDone.acquire();
     		     inPacket.setAccountNumber(inComingPacket[outputIndexServer].getAccountNumber());
     		     inPacket.setOperationType(inComingPacket[outputIndexServer].getOperationType());
     		     inPacket.setTransactionAmount(inComingPacket[outputIndexServer].getTransactionAmount());
@@ -481,7 +483,7 @@ public class Network extends Thread {
     		     {
     		    	 setInBufferStatus("normal");
     		     }
-            lock.release();
+
              return true;
         }   
          
