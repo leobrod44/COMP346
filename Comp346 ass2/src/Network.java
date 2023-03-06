@@ -26,6 +26,8 @@ public class Network extends Thread {
 
     private static Semaphore lockNotDone;
     private static Semaphore lockDone;
+    private static Semaphore lockNotDoneUpper;
+    private static Semaphore lockDoneUpper;
        
     /** 
      * Constructor of the Network class
@@ -38,6 +40,8 @@ public class Network extends Thread {
     	 int i;  
          lockDone = new Semaphore(0);
          lockNotDone = new Semaphore(0);
+         lockDoneUpper = new Semaphore(10);
+         lockNotDoneUpper = new Semaphore(10);
          System.out.println("\n Activating the network ...");
          clientIP = "192.168.2.0";
          serverIP = "216.120.40.10";
@@ -356,6 +360,12 @@ public class Network extends Thread {
      */
         public static boolean send(Transactions inPacket)
         {
+            try{
+                lockNotDoneUpper.acquire();
+            }catch(Exception e){
+                System.exit(1);
+            }
+
               inComingPacket[inputIndexClient].setAccountNumber(inPacket.getAccountNumber());
               inComingPacket[inputIndexClient].setOperationType(inPacket.getOperationType());
               inComingPacket[inputIndexClient].setTransactionAmount(inPacket.getTransactionAmount());
@@ -412,6 +422,7 @@ public class Network extends Thread {
         		 {
         			 setOutBufferStatus("normal"); 
         		 }
+             lockDoneUpper.release();
              return true;
         }   
          
@@ -425,6 +436,11 @@ public class Network extends Thread {
      */
          public static boolean transferOut(Transactions outPacket)
          {
+             try{
+                 lockDoneUpper.acquire();
+             }catch(Exception e){
+                 System.exit(1);
+             }
 
         		outGoingPacket[inputIndexServer].setAccountNumber(outPacket.getAccountNumber());
         		outGoingPacket[inputIndexServer].setOperationType(outPacket.getOperationType());
@@ -483,7 +499,7 @@ public class Network extends Thread {
     		     {
     		    	 setInBufferStatus("normal");
     		     }
-
+            lockNotDoneUpper.release();
              return true;
         }   
          
