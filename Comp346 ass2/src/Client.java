@@ -188,7 +188,12 @@ public class Client extends Thread {
 //        		 Thread.yield(); 	/* Yield the cpu if the network output buffer is full */
 //
 //        	 }
-             Network.receive(transact);                                /* Receive updated transaction from the network buffer */
+             try{
+                 Network.receive(transact);                                /* Receive updated transaction from the network buffer */
+             }
+            catch (Exception e){
+
+            }
 
             /* System.out.println("\n DEBUG : Client.receiveTransactions() - receiving updated transaction on account " + transact.getAccountNumber()); */
             

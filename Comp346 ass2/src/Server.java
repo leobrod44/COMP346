@@ -247,10 +247,12 @@ public class Server extends Thread {
      public int findAccount(String accNumber)
      {
          int i = 0;
-         
+
          /* Find account */
-         while ( !(account[i].getAccountNumber().equals(accNumber)))
+         while ( !(account[i].getAccountNumber().equals(accNumber))){
              i++;
+         }
+
          if (i == getNumberOfAccounts())
              return -1;
          else
@@ -280,7 +282,12 @@ public class Server extends Thread {
         	 if (!Network.getInBufferStatus().equals("empty"))
         	 { 
         		 /* System.out.println("\n DEBUG : Server.processTransactions() - transferring in account " + trans.getAccountNumber()); */
-        		    Network.transferIn(trans);                              /* Transfer a transaction from the network input buffer */
+                 try
+                 {
+                     Network.transferIn(trans); /* Transfer a transaction from the network input buffer */
+                 }catch (Exception e){
+
+                 }
         		 accIndex = findAccount(trans.getAccountNumber());
         		 /* Process deposit operation */
         		 if (trans.getOperationType().equals("DEPOSIT"))
