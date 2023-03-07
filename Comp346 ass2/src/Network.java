@@ -388,7 +388,7 @@ public class Network extends Thread {
               {
                   setInBufferStatus("normal");
               }
-              lockNotDone.release();
+             lockNotDone.release();
             return true;
         }   
          
@@ -399,7 +399,7 @@ public class Network extends Thread {
      */
          public static boolean receive(Transactions outPacket) throws InterruptedException
          {
-            lockDone.acquire();
+           lockDone.acquire();
         		 outPacket.setAccountNumber(outGoingPacket[outputIndexClient].getAccountNumber());
         		 outPacket.setOperationType(outGoingPacket[outputIndexClient].getOperationType());
         		 outPacket.setTransactionAmount(outGoingPacket[outputIndexClient].getTransactionAmount());
@@ -464,7 +464,7 @@ public class Network extends Thread {
         		{
         			setOutBufferStatus("normal");
         		}
-                lockDone.release();
+               lockDone.release();
              return true;
         }   
          
@@ -476,7 +476,7 @@ public class Network extends Thread {
      */
        public static boolean transferIn(Transactions inPacket) throws InterruptedException
        {
-           lockNotDone.acquire();
+          lockNotDone.acquire();
     		     inPacket.setAccountNumber(inComingPacket[outputIndexServer].getAccountNumber());
     		     inPacket.setOperationType(inComingPacket[outputIndexServer].getOperationType());
     		     inPacket.setTransactionAmount(inComingPacket[outputIndexServer].getTransactionAmount());
@@ -499,7 +499,7 @@ public class Network extends Thread {
     		     {
     		    	 setInBufferStatus("normal");
     		     }
-            lockNotDoneUpper.release();
+           lockNotDoneUpper.release();
              return true;
         }   
          

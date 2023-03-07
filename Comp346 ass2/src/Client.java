@@ -180,7 +180,7 @@ public class Client extends Thread {
      public void receiveTransactions(Transactions transact)
      {
          int i = 0;     /* Index of transaction array */
-         
+         int x = getNumberOfTransactions();
          while (i < getNumberOfTransactions())
          {   
 //        	 while (Network.getOutBufferStatus().equals("empty"))

@@ -26,6 +26,9 @@ public class Driver {
         objServer1.start();
         Server objServer2 = new Server("2");
         objServer2.start();
+        Server objServer3 = new Server("3");
+        objServer3.start();
+
 
         /*..............................................................................................................................................................*/
 
